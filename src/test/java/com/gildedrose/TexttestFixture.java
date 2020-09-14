@@ -23,7 +23,7 @@ public class TexttestFixture {
         
         System.out.println("How many days for inventory management ");
         int days = scanner.nextInt();
-        if (args == null) {
+        if (args != null) {
             days = Integer.parseInt(args[0]) + 1;
         }
         
