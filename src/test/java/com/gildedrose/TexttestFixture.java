@@ -22,20 +22,25 @@ public class TexttestFixture {
         GildedRose app = new GildedRose(items);
         
         System.out.println("How many days for inventory management ");
-        int days = scanner.nextInt();
-        if (args != null) {
-            days = Integer.parseInt(args[0]) + 1;
+         try {
+        	int days = scanner.nextInt();
+        	if(days < 0 ) {
+				throw new IllegalArgumentException("Days need to have a positive value");
+        	}   	
+	        for (int i = 0; i < days; i++) {
+	            System.out.println("-------- day " + i + " --------");
+	            System.out.println("name, sellIn, quality");
+	            for (Item item : items) {
+	                System.out.println(item);
+	            }
+	            System.out.println();
+	            app.updateQuality();
+	        }
+        } catch(Exception e) {
+        	e.printStackTrace();
+        	
+        } finally {
+        	scanner.close();
         }
-        
-        for (int i = 0; i < days; i++) {
-            System.out.println("-------- day " + i + " --------");
-            System.out.println("name, sellIn, quality");
-            for (Item item : items) {
-                System.out.println(item);
-            }
-            System.out.println();
-            app.updateQuality();
-        }
-        scanner.close();
     }
 }
