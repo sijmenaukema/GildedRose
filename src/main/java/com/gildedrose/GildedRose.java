@@ -3,8 +3,10 @@ package com.gildedrose;
 import com.products.AgedBrie;
 import com.products.BackstagePasses;
 import com.products.CommonItem;
+import com.products.Item;
 
-class GildedRose extends ItemValidation{
+
+public class GildedRose{
 	
 	Item[] items;
   
@@ -15,7 +17,8 @@ class GildedRose extends ItemValidation{
     public void updateQuality() {
         for(Item item : items ) {
     	
-        	switch(item.name) {
+    	
+        	switch(item.getProductType()) {
         	
         		case SULFURAS:
         			//do nothing

@@ -1,14 +1,14 @@
 package com.products;
 
-import com.gildedrose.Item;
-import com.gildedrose.ItemModification;
-import com.gildedrose.ItemValidation;
-
-public class AgedBrie extends ItemValidation {
+public class AgedBrie implements ItemModification, ItemValidation {
+	
+	private AgedBrie(){}
 	
 	public static Item updateItem(Item item) {
 		
 		ItemModification.decreaseSellDate(item);
-		return (isItemExpired(item.sellIn)) ? increaseQuality(item,2) : increaseQuality(item);
+		item = ItemValidation.isItemExpired(item) ? ItemModification.increaseQuality(item,2) : ItemModification.increaseQuality(item);
+		ItemModification.checkMaxValue(item);
+		return item;
 	}
 }

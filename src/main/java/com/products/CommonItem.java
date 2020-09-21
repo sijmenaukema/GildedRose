@@ -1,26 +1,26 @@
 package com.products;
 
-import com.gildedrose.Item;
-import com.gildedrose.ItemValidation;
-
-public class CommonItem extends ItemValidation {
+public class CommonItem implements ItemModification, ItemValidation {
+	
+	private CommonItem(){}
 	
 	public static Item updateItem(Item item) {
 	
-		if(isCommonItem(item.name) ) {
-			decreaseSellDate(item);
+		if(ItemValidation.isCommonItem(item) ) {
+			ItemModification.decreaseSellDate(item);
 			// conjured items lose quality twice as fast
-			if(!isItemExpired(item.sellIn)  && isConjuredItem(item.name) ) {
-				decreaseQuality(item, 2);
+			if( !ItemValidation.isItemExpired(item)  && ItemValidation.isConjuredItem(item) || (ItemValidation.isItemExpired(item) && !ItemValidation.isConjuredItem(item) ) ) {
+				ItemModification.decreaseQuality(item, 2);
+				ItemModification.checkMinValue(item);
 			}
-			else if(!isItemExpired(item.sellIn) && !isConjuredItem(item.name) ) {
-				decreaseQuality(item);
+			else if(!ItemValidation.isItemExpired(item) && !ItemValidation.isConjuredItem(item) ) {
+				ItemModification.decreaseQuality(item);
+				ItemModification.checkMinValue(item);
 			}
-			else if(isItemExpired(item.sellIn) && !isConjuredItem(item.name) ) {
-				decreaseQuality(item, 2);
-			}
-			else if(isItemExpired(item.sellIn) && isConjuredItem(item.name) ) {
-				decreaseQuality(item, 4);
+
+			else if(ItemValidation.isItemExpired(item) && ItemValidation.isConjuredItem(item) ) {
+				ItemModification.decreaseQuality(item, 4);
+				ItemModification.checkMinValue(item);
 			}
 		}
 		return item;

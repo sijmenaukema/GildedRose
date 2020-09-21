@@ -1,26 +1,30 @@
 package com.products;
 
-import com.gildedrose.Item;
-import com.gildedrose.ItemValidation;
+import com.commons.Constants;
 
-public class BackstagePasses extends ItemValidation{
+public class BackstagePasses implements ItemModification, ItemValidation{
 	
+	private BackstagePasses(){}
+
 	public static Item updateItem(Item item) {
 		
-		item = decreaseSellDate(item);
+		item = ItemModification.decreaseSellDate(item);
 		
-		if(!isItemExpired(item.sellIn)) {
+		if(!ItemValidation.isItemExpired(item)) {
 			if( item.sellIn <= 5) {
-				increaseQuality(item, 3);
+				ItemModification.increaseQuality(item, 3);
+				ItemModification.checkMaxValue(item);
 			}
 			else if( item.sellIn <= 10) {
-				increaseQuality(item, 2);
+				ItemModification.increaseQuality(item, 2);
+				ItemModification.checkMaxValue(item);
 			}
 			else {
-				increaseQuality(item);
+				ItemModification.increaseQuality(item);
+				ItemModification.checkMaxValue(item);
 			} 
 		} else {
-			item.quality = MIN_QUALITY;
+			item.quality = Constants.getMIN_QUALITY();
 		}
 		return item;
 	}
